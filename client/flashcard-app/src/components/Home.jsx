@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
 const Input = (props) => {
+  // this can all be condensed into a single state object, but
+  // i was having trouble getting it to work initially
   const [question, setQuestion] = useState("");
   const [answerOne, setAnswerOne] = useState("");
   const [answerTwo, setAnswerTwo] = useState("");

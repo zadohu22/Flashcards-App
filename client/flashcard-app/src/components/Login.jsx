@@ -65,7 +65,9 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        {/* {signUpUserExists === true && (
+        {/* this should be completely functional error handling, i just haven't updated the state variables and shit
+        
+        {signUpUserExists === true && (
           <div className='text-red-500'>
             User already exists, please sign in.
           </div>

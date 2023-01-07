@@ -9,8 +9,10 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
   const [msg, setMsg] = useState("");
+  // idk why this is here
   const [successfulSignUp, setSuccessfulSignUp] = useState(null);
 
+  // i don't think these need to exist as their own functions lmao
   const handleSubmit = (e) => {
     e.preventDefault();
   };

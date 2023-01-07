@@ -7,36 +7,41 @@ const HomePage = () => {
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
   const [users, setUsers] = useState([]);
+
+  // the sidebar, populating the "sets" as they're made
   const [cardGroup, setcardGroup] = useState([]);
+  // the black full screen overlay after clicking on create set or whatever
   const [newcardGroupOverlay, setNewcardGroupOverlay] = useState(false);
+  // the input that shows in the overlay
   const [newCardGroupInput, setNewCardGroupInput] = useState("");
+  // backend shit
   const [msg, setMsg] = useState("");
   const [test, setTest] = useState("");
 
+  // if you click on the overlay it minimizes it, but still allows you to click on the input and the btn
   const handleNewcardGroupOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
       setNewcardGroupOverlay(false);
+      // backend test shit
       console.log(users);
       console.log(test);
     }
   };
 
+  // stores input for obvious reasons
   const handleNewCardGroupInput = (e) => {
     setNewCardGroupInput(e.target.value);
     console.log(newCardGroupInput);
   };
 
-  //   const handleNewcardGroupButtonClick = () => {
-  //     setNewcardGroupOverlay(false);
-  //     setcardGroup([...cardGroup, newCardGroupInput]);
-  //     console.log(cardGroup);
-  //   };
-
+  // i'm calling sets "groups" because [sets, setSets] if weird af
+  // on click get rid of the overlay and add the title to the sidebar
   const handleNewGroupClick = async () => {
     setNewcardGroupOverlay(false);
     setcardGroup([...cardGroup, newCardGroupInput]);
     console.log(cardGroup);
 
+    //backend shit, this adds the sets only for the current user
     try {
       await axios
         .post("http://localhost:5000/addSet", {
@@ -53,6 +58,7 @@ const HomePage = () => {
     }
   };
 
+  // logout lol
   const logout = async () => {
     try {
       await axios.delete("http://localhost:5000/logout");
@@ -62,6 +68,7 @@ const HomePage = () => {
     }
   };
 
+  // this is all user auth stuff, makes a token and does things with it
   useEffect(() => {
     refreshToken();
     getUsers();
@@ -110,6 +117,8 @@ const HomePage = () => {
   };
 
   const navigate = useNavigate();
+
+  // ends backend shit starts with tailwind shit :D
   return (
     <div className='w-full h-full flex flex-row-reverse'>
       <button
@@ -150,6 +159,7 @@ const HomePage = () => {
         <h1 className='text-3xl text-center relative top-2'>Card Sets</h1>
         <div>
           <ul className='flex flex-col gap-2'>
+            {/* maps the state array to list items. i'll have to add to this to read from the db later */}
             {cardGroup.map((cards) => (
               <li key={cards} className='cursor-pointer border-b-2'>
                 {cards}
