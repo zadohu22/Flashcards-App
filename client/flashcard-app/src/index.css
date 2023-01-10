@@ -18,3 +18,7 @@ html, body, #root{
 .card-set{
   margin-top: 1rem;
 }
+
+button{
+  @apply btn btn-primary 
+}

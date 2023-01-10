@@ -20,34 +20,14 @@ const CardSetsModel = db.define("sets", {
   },
 });
 
-// const currentUser = async (req, res) => {
-//   await Users.findAll({
-//     where: {
-//       id: req.body.id,
-//     },
-//   });
-// };
-
-// const currentUser = await Users.findByPk(req.body.id);
-
-const currentUser = async (req, res) => {
-  await Users.findByPk(req.body.id);
-  console.log(req.body.id);
-  CardSetsModel.belongsTo(currentUser, {
+const SetCurrentUser = async (req, res) => {
+  const currentUser = await Users.findByPk(req.headers.userid);
+  CardSetsModel.belongsTo(Users, {
     foreignKey: "userId",
     targetKey: "id",
   });
-  currentUser.hasMany(CardSetsModel, { foreignKey: "userId", sourceKey: "id" });
+  Users.hasMany(CardSetsModel, { foreignKey: "userId", sourceKey: "id" });
+  return currentUser;
 };
 
-// CardSetsModel.belongsTo(Users, {
-//   foreignKey: "userId",
-//   targetKey: "id",
-// });
-// Users.hasMany(CardSetsModel, { foreignKey: "userId", sourceKey: "id" });
-
-// (async () => {
-//   await db.sync();
-// })();
-
-export default CardSetsModel;
+export { CardSetsModel, SetCurrentUser };

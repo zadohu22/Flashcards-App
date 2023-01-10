@@ -4,75 +4,21 @@ import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
 const HomePage = () => {
+  // eslint-disable-next-line no-unused-vars
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
-  const [users, setUsers] = useState([]);
 
-  // the sidebar, populating the "sets" as they're made
-  const [cardGroup, setcardGroup] = useState([]);
-  // the black full screen overlay after clicking on create set or whatever
+  // the black full screen overlay after clicking on create set
   const [newcardGroupOverlay, setNewcardGroupOverlay] = useState(false);
+
   // the input that shows in the overlay
   const [newCardGroupInput, setNewCardGroupInput] = useState("");
-  // backend shit
+
+  // eslint-disable-next-line no-unused-vars
   const [msg, setMsg] = useState("");
-  const [test, setTest] = useState("");
-
-  // if you click on the overlay it minimizes it, but still allows you to click on the input and the btn
-  const handleNewcardGroupOverlayClick = (e) => {
-    if (e.target === e.currentTarget) {
-      setNewcardGroupOverlay(false);
-      // backend test shit
-      console.log(users);
-      console.log(test);
-    }
-  };
-
-  // stores input for obvious reasons
-  const handleNewCardGroupInput = (e) => {
-    setNewCardGroupInput(e.target.value);
-    console.log(newCardGroupInput);
-  };
-
-  // i'm calling sets "groups" because [sets, setSets] if weird af
-  // on click get rid of the overlay and add the title to the sidebar
-  const handleNewGroupClick = async () => {
-    setNewcardGroupOverlay(false);
-    setcardGroup([...cardGroup, newCardGroupInput]);
-    console.log(cardGroup);
-
-    //backend shit, this adds the sets only for the current user
-    try {
-      await axios
-        .post("http://localhost:5000/addSet", {
-          name: newCardGroupInput,
-          userId: test,
-        })
-        .then((res) => {
-          console.log(res);
-        });
-    } catch (error) {
-      if (error.response) {
-        setMsg(error.response.data.msg);
-      }
-    }
-  };
-
-  // logout lol
-  const logout = async () => {
-    try {
-      await axios.delete("http://localhost:5000/logout");
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // this is all user auth stuff, makes a token and does things with it
-  useEffect(() => {
-    refreshToken();
-    getUsers();
-  }, []);
+  const [userId, setUserId] = useState("");
+  const [getCardGroups, setGetCardGroups] = useState([]);
+  const navigate = useNavigate();
 
   const refreshToken = async () => {
     try {
@@ -80,11 +26,64 @@ const HomePage = () => {
       setToken(response.data.accessToken);
       const decoded = jwt_decode(response.data.accessToken);
       setExpire(decoded.exp);
-      setTest(decoded.userId);
+      setUserId(decoded.userId);
     } catch (error) {
       if (error.response) {
         navigate("/");
       }
+    }
+  };
+
+  useEffect(() => {
+    refreshToken();
+    if (userId !== "") {
+      getSets();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
+
+  // if you click on the overlay it minimizes it, but still allows you to click on the input and the btn
+  const handleNewcardGroupOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      setNewcardGroupOverlay(false);
+    }
+  };
+
+  // on click get rid of the overlay and add the title to the sidebar
+  const handleNewGroupClick = async () => {
+    setNewcardGroupOverlay(false);
+    try {
+      await axios.post("http://localhost:5000/addSet", {
+        name: newCardGroupInput,
+        userId: userId,
+      });
+      getSets();
+    } catch (error) {
+      if (error.response) {
+        setMsg(error.response.data.msg);
+      }
+    }
+  };
+
+  const getSets = async () => {
+    try {
+      const sets = await axios.get("http://localhost:5000/getSets", {
+        headers: {
+          userId: `${userId}`,
+        },
+      });
+      setGetCardGroups([...sets.data]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await axios.delete("http://localhost:5000/logout");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -107,26 +106,12 @@ const HomePage = () => {
     }
   );
 
-  const getUsers = async () => {
-    const response = await axiosJWT.get("http://localhost:5000/users", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    setUsers(response.data);
-  };
-
-  const navigate = useNavigate();
-
-  // ends backend shit starts with tailwind shit :D
   return (
     <div className='w-full h-full flex flex-row-reverse'>
-      <button
-        className='btn btn-primary absolute top-4 right-4'
-        onClick={logout}
-      >
+      <button className='absolute top-4 right-4' onClick={logout}>
         Logout
       </button>
+
       {newcardGroupOverlay && (
         <div
           onClick={handleNewcardGroupOverlayClick}
@@ -137,32 +122,29 @@ const HomePage = () => {
             type='text'
             placeholder='Name of new set'
             className='px-4 py-2 rounded'
-            onChange={handleNewCardGroupInput}
+            onChange={(e) => setNewCardGroupInput(e.target.value)}
           />
 
-          <button onClick={handleNewGroupClick} className='btn btn-primary'>
-            Add set
-          </button>
+          <button onClick={handleNewGroupClick}>Add set</button>
         </div>
       )}
+
       <div className='main-window w-[77%] h-full flex flex-col items-center justify-center'>
         <h1 className='text-5xl absolute top-4'>Flashcards</h1>
         <h2 className='text-3xl'>Welcome to flashcards, blah blah</h2>
-        <button
-          onClick={() => setNewcardGroupOverlay(true)}
-          className='btn btn-primary mt-4'
-        >
+        <button onClick={() => setNewcardGroupOverlay(true)} className='mt-4'>
           add new set
         </button>
       </div>
+
       <div className='side-bar flex flex-col gap-4 w-[23%] h-full border-r-2 p-2 absolute left-0'>
         <h1 className='text-3xl text-center relative top-2'>Card Sets</h1>
         <div>
           <ul className='flex flex-col gap-2'>
-            {/* maps the state array to list items. i'll have to add to this to read from the db later */}
-            {cardGroup.map((cards) => (
-              <li key={cards} className='cursor-pointer border-b-2'>
-                {cards}
+            {/* maps the state array to list items from database */}
+            {getCardGroups.map((cards, index) => (
+              <li key={index} className='cursor-pointer border-b-2'>
+                {cards.name}
               </li>
             ))}
           </ul>

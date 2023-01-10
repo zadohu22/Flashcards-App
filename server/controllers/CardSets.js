@@ -1,4 +1,4 @@
-import CardSetsModel from "../models/CardSetsModel.js";
+import { CardSetsModel } from "../models/CardSetsModel.js";
 
 export const AddSet = async (req, res) => {
   const { name, userId } = req.body;
