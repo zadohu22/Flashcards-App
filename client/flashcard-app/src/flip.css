@@ -1,0 +1,29 @@
+.card-flipper{
+    position: relative;
+    width: 200px;
+    height: 250px;
+    perspective: 1000px;
+    transition: ease-in-out;
+    transition-duration: 0.5s;
+}
+
+.card-front,
+.card-back {
+    /* position: absolute; */
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+
+  
+}
+
+
+.card.flipper.is-flipped .card-front{
+    transform: rotateY(180deg)
+}
+
+.card.flipped.is-flipped .card-back {
+    transform: rotateY(0);
+}
+

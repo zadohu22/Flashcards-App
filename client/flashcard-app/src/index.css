@@ -20,5 +20,5 @@ html, body, #root{
 }
 
 button{
-  @apply btn btn-primary 
+  @apply btn btn-outline btn-primary
 }
