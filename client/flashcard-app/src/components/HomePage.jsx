@@ -65,6 +65,10 @@ const HomePage = () => {
     }
   };
 
+  const handleListItemClick = (e) => {
+    navigate("/sets", { state: { nameOfSet: e.target.textContent } });
+  };
+
   const getSets = async () => {
     try {
       const sets = await axios.get("http://localhost:5000/getSets", {
@@ -143,7 +147,11 @@ const HomePage = () => {
           <ul className='flex flex-col gap-2'>
             {/* maps the state array to list items from database */}
             {getCardGroups.map((cards, index) => (
-              <li key={index} className='cursor-pointer border-b-2'>
+              <li
+                key={index}
+                className='cursor-pointer border-b-2 h-[50px] flex justify-center items-center'
+                onClick={handleListItemClick}
+              >
                 {cards.name}
               </li>
             ))}

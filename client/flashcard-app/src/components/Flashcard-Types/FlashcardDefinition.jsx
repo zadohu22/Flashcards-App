@@ -12,10 +12,10 @@ const FlashcardDefinition = ({ term, definition }) => {
       }}
     >
       <div className='flip-card-inner'>
-        <div className='flip-card-front flex justify-center items-center'>
+        <div className='flip-card-front flex justify-center items-center bg-secondary'>
           <h1 className='text-2xl text-black'>{term}</h1>
         </div>
-        <div className='flip-card-back flex justify-center items-center'>
+        <div className='flip-card-back flex justify-center items-center bg-secondary'>
           <h1 className='text-xl text-black'>{definition}</h1>
         </div>
       </div>
