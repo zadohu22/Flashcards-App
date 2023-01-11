@@ -1,29 +1,39 @@
-.card-flipper{
-    position: relative;
-    width: 200px;
-    height: 250px;
+.flip-card{
+    background-color: transparent;
+    width: 300px;
+    height: 300px;
     perspective: 1000px;
-    transition: ease-in-out;
-    transition-duration: 0.5s;
 }
 
-.card-front,
-.card-back {
-    /* position: absolute; */
+.flip-card-inner{
+    position: relative;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden;
+    text-align: center;
+    transition: transform 0.6s;
     transform-style: preserve-3d;
-
-  
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
-
-.card.flipper.is-flipped .card-front{
-    transform: rotateY(180deg)
+.flip .flip-card-inner{
+    transform: rotateY(180deg);
 }
 
-.card.flipped.is-flipped .card-back {
-    transform: rotateY(0);
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
+.flip-card-front{
+    background-color: #2980b9;
+    color: black;
+}
+
+.flip-card-back{
+    background-color: #2980b9;
+    color: white;
+    transform: rotateY(180deg);
+}
