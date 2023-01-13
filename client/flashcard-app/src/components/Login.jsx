@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Authenticate from "../Requests/Authenticate";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -8,26 +8,6 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
-
-  const Authenticate = async (e) => {
-    e.preventDefault();
-    try {
-      await axios
-        .post("http://localhost:5000/login", {
-          email: email,
-          password: password,
-        })
-        .then((res) => {
-          console.log(res);
-        });
-
-      navigate("/home");
-    } catch (error) {
-      if (error.response) {
-        setMsg(error.response.data.msg);
-      }
-    }
-  };
 
   return (
     <div className='w-full h-full bg-violet-800 flex flex-col justify-center items-center'>
@@ -38,7 +18,6 @@ const Login = () => {
       <form
         method='get'
         className='form-control grow flex items-center max-w-[90%] gap-2 login-form'
-        // onSubmit={handleSignUp}
       >
         <label htmlFor='email' className='input-group flex max-w-full'>
           <span className='grow shrink-0 flex justify-center'>Email:</span>
@@ -79,8 +58,8 @@ const Login = () => {
         <div className='w-[80%]'>
           <button
             type='submit'
-            className='btn btn-primary mt-2 w-full bg-slate-300 text-violet-800 hover:bg-violet-800 hover:text-slate-300'
-            onClick={Authenticate}
+            className='mt-2 w-full'
+            onClick={(e) => Authenticate(e, email, password, setMsg, navigate)}
           >
             Sign in!
           </button>

@@ -10,6 +10,14 @@ function App() {
     <Router>
       <RouteSwitch />
     </Router>
+    // <>
+    //   <FlashcardDefinition
+    //     term={"test term"}
+    //     definition={"this is the definition"}
+    //   />
+    //   <FlashcardChoice />
+    //   <FlashcardBool />
+    // </>
   );
 }
 

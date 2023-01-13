@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import handleSignUp from "../Requests/Signup";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -9,35 +9,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
   const [msg, setMsg] = useState("");
-  const [successfulSignUp, setSuccessfulSignUp] = useState(null);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
-
-  const handleLoginSwitch = () => {
-    navigate("/login");
-  };
-
-  const handleSignUp = async (e) => {
-    e.preventDefault();
-    try {
-      await axios
-        .post("http://localhost:5000/users", {
-          email: email,
-          password: password,
-          confPassword: confPassword,
-        })
-        .then((res) => {
-          console.log(res);
-        });
-      navigate("/login");
-    } catch (error) {
-      if (error.response) {
-        setMsg(error.response.data.msg);
-      }
-    }
-  };
+  // const [successfulSignUp, setSuccessfulSignUp] = useState(null);
 
   return (
     <div className='w-full h-full bg-violet-800 flex flex-col justify-center items-center'>
@@ -98,8 +70,10 @@ const SignUp = () => {
         <div className='w-[80%]'>
           <button
             type='submit'
-            className='btn btn-primary mt-2 w-full bg-slate-300 text-violet-800 hover:bg-violet-800 hover:text-slate-300'
-            onClick={handleSignUp}
+            className='mt-2 w-full '
+            onClick={(e) =>
+              handleSignUp(e, email, password, confPassword, navigate, setMsg)
+            }
           >
             Sign up!
           </button>

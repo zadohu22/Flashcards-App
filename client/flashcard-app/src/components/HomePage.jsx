@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+import CreateSet from "../Requests/CreateSet";
+import AxiosJWT from "../Requests/AxiosJWT";
+import Logout from "../Requests/Logout";
+import RefreshToken from "../Requests/RefreshToken";
 
 const HomePage = () => {
   // eslint-disable-next-line no-unused-vars
@@ -20,22 +23,8 @@ const HomePage = () => {
   const [getCardGroups, setGetCardGroups] = useState([]);
   const navigate = useNavigate();
 
-  const refreshToken = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/token");
-      setToken(response.data.accessToken);
-      const decoded = jwt_decode(response.data.accessToken);
-      setExpire(decoded.exp);
-      setUserId(decoded.userId);
-    } catch (error) {
-      if (error.response) {
-        navigate("/");
-      }
-    }
-  };
-
   useEffect(() => {
-    refreshToken();
+    RefreshToken(setToken, setExpire, setUserId, navigate);
     if (userId !== "") {
       getSets();
     }
@@ -49,24 +38,18 @@ const HomePage = () => {
     }
   };
 
-  // on click get rid of the overlay and add the title to the sidebar
-  const handleNewGroupClick = async () => {
+  const handleAddSet = () => {
+    CreateSet(newCardGroupInput, userId, getSets, setMsg);
     setNewcardGroupOverlay(false);
-    try {
-      await axios.post("http://localhost:5000/addSet", {
-        name: newCardGroupInput,
-        userId: userId,
-      });
-      getSets();
-    } catch (error) {
-      if (error.response) {
-        setMsg(error.response.data.msg);
-      }
-    }
   };
 
   const handleListItemClick = (e) => {
-    navigate("/sets", { state: { nameOfSet: e.target.textContent } });
+    const set = getCardGroups.find((set) => set.name === e.target.textContent);
+    if (set) {
+      navigate("/sets", {
+        state: { nameOfSet: e.target.textContent, setId: set.id },
+      });
+    }
   };
 
   const getSets = async () => {
@@ -82,37 +65,14 @@ const HomePage = () => {
     }
   };
 
-  const logout = async () => {
-    try {
-      await axios.delete("http://localhost:5000/logout");
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const axiosJWT = axios.create();
-
-  axiosJWT.interceptors.request.use(
-    async (config) => {
-      const currentDate = new Date();
-      if (expire * 1000 < currentDate.getTime()) {
-        const response = await axios.get("http://localhost:5000/token");
-        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-        setToken(response.data.accessToken);
-        const decoded = jwt_decode(response.data.accessToken);
-        setExpire(decoded.exp);
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
+  AxiosJWT(expire, setToken, setExpire);
 
   return (
     <div className='w-full h-full flex flex-row-reverse'>
-      <button className='absolute top-4 right-4' onClick={logout}>
+      <button
+        className='absolute top-4 right-4'
+        onClick={() => Logout(navigate)}
+      >
         Logout
       </button>
 
@@ -129,7 +89,7 @@ const HomePage = () => {
             onChange={(e) => setNewCardGroupInput(e.target.value)}
           />
 
-          <button onClick={handleNewGroupClick}>Add set</button>
+          <button onClick={handleAddSet}>Add set</button>
         </div>
       )}
 
@@ -143,8 +103,8 @@ const HomePage = () => {
 
       <div className='side-bar flex flex-col gap-4 w-[23%] h-full border-r-2 p-2 absolute left-0'>
         <h1 className='text-3xl text-center relative top-2'>Card Sets</h1>
-        <div>
-          <ul className='flex flex-col gap-2'>
+        <div className='overflow-scroll'>
+          <ul className='flex flex-col gap-2 '>
             {/* maps the state array to list items from database */}
             {getCardGroups.map((cards, index) => (
               <li
