@@ -51,11 +51,11 @@ const SetsPage = () => {
               <option onClick={handleSelectMenu}>True/False</option>
             </select>
             {selectedCardType === "Definition" ? (
-              <AddDefinitionCard />
+              <AddDefinitionCard id={location.state.setId} />
             ) : selectedCardType === "Multiple Choice" ? (
-              <AddChoiceCard />
+              <AddChoiceCard id={location.state.setId} />
             ) : selectedCardType === "True/False" ? (
-              <AddBoolCard />
+              <AddBoolCard id={location.state.setId} />
             ) : (
               ""
             )}

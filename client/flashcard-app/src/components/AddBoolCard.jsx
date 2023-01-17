@@ -25,7 +25,7 @@ const AddBoolCard = () => {
           name='radio-4'
           className='radio radio-accent'
         />
-        <label htmlFor='inputFalse'>True</label>
+        <label htmlFor='inputFalse'>False</label>
       </div>
 
       <button>Add Card</button>
