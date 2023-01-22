@@ -7,12 +7,14 @@ const CreateCard = async (
   setMsg,
   definition,
   answerOne,
+  oneCorrect,
   answerTwo,
+  twoCorrect,
   answerThree,
+  threeCorrect,
   answerFour,
-  correctAnswer,
-  isTrue,
-  isFalse
+  fourCorrect,
+  selection
 ) => {
   // setNewcardGroupOverlay(false);
 
@@ -23,20 +25,25 @@ const CreateCard = async (
   };
 
   const DefinitionData = {
+    title: title,
     definition: definition,
   };
 
   const ChoiceData = {
+    title: title,
     answerOne: answerOne,
+    oneCorrect: oneCorrect,
     answerTwo: answerTwo,
+    twoCorrect: twoCorrect,
     answerThree: answerThree,
+    threeCorrect: threeCorrect,
     answerFour: answerFour,
-    correctAnswer: correctAnswer,
+    fourCorrect: fourCorrect,
   };
 
-  const BooleanData = {
-    isTrue: isTrue,
-    isFalse: isFalse,
+  const BoolData = {
+    title: title,
+    selection: selection,
   };
 
   if (cardType === "Definition") {
@@ -46,7 +53,9 @@ const CreateCard = async (
           cardData,
           DefinitionData,
         })
-        .then((response) => console.log(response.data));
+        .then((response) =>
+          console.log(response.data, "selection =>", selection)
+        );
     } catch (error) {
       if (error.response) {
         setMsg(error.response.data.msg);
@@ -65,12 +74,12 @@ const CreateCard = async (
         setMsg(error.response.data.msg);
       }
     }
-  } else {
+  } else if (cardType === "Bool") {
     try {
       await axios
         .post("http://localhost:5000/addCard", {
           cardData,
-          BooleanData,
+          BoolData,
         })
         .then((response) => console.log(response.data));
     } catch (error) {

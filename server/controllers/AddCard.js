@@ -3,12 +3,11 @@ import {
   CardsModel,
   DefinitionCard,
   ChoiceCard,
-  BooleanCard,
+  BoolCard,
 } from "../models/CardsModel.js";
 import { CardSetsModel } from "../models/CardSetsModel.js";
 
 export const AddCard = async (req, res) => {
-  // const { setId, title, cardType } = req.body;
   const cardData = req.body.cardData;
   console.log(req.body);
   try {
@@ -20,24 +19,31 @@ export const AddCard = async (req, res) => {
       if (card.cardType === "Definition") {
         const definitionData = req.body.DefinitionData;
         await DefinitionCard.create({
+          title: cardData.title,
           cardId: card.id,
           definition: definitionData.definition,
         });
       } else if (card.cardType === "Choice") {
         const choiceData = req.body.ChoiceData;
         await ChoiceCard.create({
+          title: cardData.title,
           cardId: card.id,
           answerOne: choiceData.answerOne,
+          oneCorrect: choiceData.oneCorrect,
           answerTwo: choiceData.answerTwo,
+          twoCorrect: choiceData.twoCorrect,
           answerThree: choiceData.answerThree,
+          threeCorrect: choiceData.threeCorrect,
           answerFour: choiceData.answerFour,
-          correctAnswer: choiceData.correctAnswer,
+          fourCorrect: choiceData.fourCorrect,
         });
-      } else {
-        await BooleanCard.create({
+      } else if (card.cardType === "Bool") {
+        const boolData = req.body.BoolData;
+        console.log(boolData);
+        await BoolCard.create({
+          title: cardData.title,
           cardId: card.id,
-          isTrue: req.body.isTrue,
-          isFalse: req.body.isFalse,
+          selection: boolData.selection,
         });
       }
     });
