@@ -53,9 +53,7 @@ const CreateCard = async (
           cardData,
           DefinitionData,
         })
-        .then((response) =>
-          console.log(response.data, "selection =>", selection)
-        );
+        .then((response) => console.log(response.data));
     } catch (error) {
       if (error.response) {
         setMsg(error.response.data.msg);

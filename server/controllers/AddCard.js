@@ -40,6 +40,7 @@ export const AddCard = async (req, res) => {
       } else if (card.cardType === "Bool") {
         const boolData = req.body.BoolData;
         console.log(boolData);
+        console.log(selection);
         await BoolCard.create({
           title: cardData.title,
           cardId: card.id,

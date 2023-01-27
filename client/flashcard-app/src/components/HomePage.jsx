@@ -60,6 +60,7 @@ const HomePage = () => {
         },
       });
       setGetCardGroups([...sets.data]);
+      console.log(sets.data);
     } catch (error) {
       console.log(error);
     }

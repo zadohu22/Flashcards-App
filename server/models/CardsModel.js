@@ -84,6 +84,7 @@ const BoolCard = db.define("BoolCard", {
     type: Sequelize.TEXT,
     allowNull: false,
   },
+
   selection: {
     type: Sequelize.BOOLEAN,
   },

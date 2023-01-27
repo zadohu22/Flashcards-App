@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-const FlashcardChoice = () => {
+const FlashcardBool = () => {
   const handleSubmit = () => {};
 
   return (
@@ -34,4 +34,4 @@ const FlashcardChoice = () => {
   );
 };
 
-export default FlashcardChoice;
+export default FlashcardBool;

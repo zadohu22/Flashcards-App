@@ -3,11 +3,22 @@ import { useLocation } from "react-router-dom";
 import AddBoolCard from "./AddBoolCard";
 import AddChoiceCard from "./AddChoiceCard";
 import AddDefinitionCard from "./AddDefinitionCard";
+import DisplayCards from "./DisplayCards";
+import axios from "axios";
+import FlashcardBool from "./Flashcard-Types/FlashcardBool";
+import FlashcardDefinition from "./Flashcard-Types/FlashcardDefinition";
+import FlashcardChoice from "./Flashcard-Types/FlashcardChoice";
+import { useEffect } from "react";
 
 const SetsPage = () => {
   const location = useLocation();
   const [selectedCardType, setSelectedCardType] = useState();
   const [modalClosed, setModalClosed] = useState(false);
+  const [allCards, setAllCards] = useState([]);
+
+  useEffect(() => {
+    displayCards();
+  }, []);
 
   const handleSelectMenu = (e) => {
     setSelectedCardType(e.target.innerText);
@@ -16,6 +27,21 @@ const SetsPage = () => {
   const handleModalClick = (e) => {
     if (e.target === e.currentTarget) {
       setSelectedCardType("defaultSelected");
+    }
+  };
+
+  const displayCards = async (req, res) => {
+    try {
+      const getAllCards = await axios.get("http://localhost:5000/getAllCards", {
+        headers: {
+          setIdentity: `${location.state.setId}`,
+        },
+      });
+      // setAllCards([...getAllCards.data.title]);
+      console.log(getAllCards.data);
+      setAllCards([...getAllCards.data]);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -62,6 +88,9 @@ const SetsPage = () => {
           </label>
         </label>
       </div>
+      {allCards.map((card) => {
+        return <p>{card.title}</p>;
+      })}
     </>
   );
 };
