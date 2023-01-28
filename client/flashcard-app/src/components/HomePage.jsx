@@ -27,6 +27,7 @@ const HomePage = () => {
     RefreshToken(setToken, setExpire, setUserId, navigate);
     if (userId !== "") {
       getSets();
+      console.log(userId);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);

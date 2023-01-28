@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../../flip.css";
 
-const FlashcardDefinition = ({ term, definition }) => {
+const FlashcardDefinition = ({ title, definition }) => {
   const [flipped, setFlipped] = useState(false);
 
   return (
@@ -13,7 +13,7 @@ const FlashcardDefinition = ({ term, definition }) => {
     >
       <div className='flip-card-inner'>
         <div className='flip-card-front flex justify-center items-center bg-secondary'>
-          <h1 className='text-2xl text-black'>{term}</h1>
+          <h1 className='text-2xl text-black'>{title}</h1>
         </div>
         <div className='flip-card-back flex justify-center items-center bg-secondary'>
           <h1 className='text-xl text-black'>{definition}</h1>

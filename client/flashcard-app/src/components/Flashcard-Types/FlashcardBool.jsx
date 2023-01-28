@@ -1,12 +1,12 @@
 import React from "react";
 import axios from "axios";
 
-const FlashcardBool = () => {
+const FlashcardBool = ({ title, selection }) => {
   const handleSubmit = () => {};
 
   return (
     <div className='w-[300px] h-[300px] bg-primary text-black flex flex-col justify-around items-center'>
-      <h1 className='text-xl'>Title</h1>
+      <h1 className='text-xl'>{title}</h1>
 
       <form className='flex flex-col gap-2 self-start' onSubmit={handleSubmit}>
         <div className='flex gap-2'>

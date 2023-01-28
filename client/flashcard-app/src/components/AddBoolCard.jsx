@@ -2,13 +2,13 @@ import React from "react";
 import { useState } from "react";
 import CreateCard from "../Requests/CreateCard";
 
-const AddBoolCard = ({ id }) => {
+const AddBoolCard = ({ id, setAllCards, getAllCards }) => {
   const [selection, setSelection] = useState(false);
   const [title, setTitle] = useState("");
   const [msg, setMsg] = useState("");
 
-  const handleCreateCard = () => {
-    CreateCard(
+  const handleCreateCard = async () => {
+    await CreateCard(
       id,
       title,
       "Bool",
@@ -24,7 +24,7 @@ const AddBoolCard = ({ id }) => {
       null,
       selection
     );
-    console.log(selection);
+    await getAllCards(id, setAllCards);
   };
 
   // console.log(CreateCard(selection));

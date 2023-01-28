@@ -1,4 +1,9 @@
-import { CardsModel } from "./CardsModel.js";
+import {
+  CardsModel,
+  DefinitionCard,
+  ChoiceCard,
+  BoolCard,
+} from "./CardsModel.js";
 import { CardSetsModel } from "./CardSetsModel.js";
 
 export const GetAllCards = async (req, res) => {
@@ -9,6 +14,11 @@ export const GetAllCards = async (req, res) => {
         id: req.headers.setidentity,
       },
     });
+
+    // const findDefinitionCards = await CardsModel.findAll({
+    //   raw: true,
+    //   where:
+    // })
 
     const allCards = await CardsModel.findAll({
       raw: true,

@@ -3,22 +3,59 @@ import { useLocation } from "react-router-dom";
 import AddBoolCard from "./AddBoolCard";
 import AddChoiceCard from "./AddChoiceCard";
 import AddDefinitionCard from "./AddDefinitionCard";
-import DisplayCards from "./DisplayCards";
 import axios from "axios";
 import FlashcardBool from "./Flashcard-Types/FlashcardBool";
 import FlashcardDefinition from "./Flashcard-Types/FlashcardDefinition";
 import FlashcardChoice from "./Flashcard-Types/FlashcardChoice";
 import { useEffect } from "react";
+import { getAllCards } from "../Requests/GetAllCards";
+import CreateCard from "../Requests/CreateCard";
 
 const SetsPage = () => {
   const location = useLocation();
   const [selectedCardType, setSelectedCardType] = useState();
   const [modalClosed, setModalClosed] = useState(false);
   const [allCards, setAllCards] = useState([]);
+  const [test, setTest] = useState(false);
 
   useEffect(() => {
-    displayCards();
+    getAllCards(`${location.state.setId}`, setAllCards, allCards);
+    // displayAllCards(allCards);
   }, []);
+
+  useEffect(() => {
+    displayAllCards(allCards);
+    console.log("from use effect", allCards);
+  }, [allCards]);
+
+  const displayAllCards = (cards) => {
+    return allCards.map((card) => {
+      if (card.cardType === "Definition") {
+        return (
+          <FlashcardDefinition
+            title={card.title}
+            definition={card.definition}
+          />
+        );
+      } else if (card.cardType === "Choice") {
+        return (
+          <FlashcardChoice
+            title={card.title}
+            answerOne={card.answerOne}
+            answerTwo={card.answerTwo}
+            answerThree={card.answerThree}
+            answerFour={card.answerFour}
+            oneCorrect={card.oneCorrect}
+            twoCorrect={card.twoCorrect}
+            threeCorrect={card.threeCorrect}
+            fourCorrect={card.fourCorrect}
+          />
+        );
+      } else if (card.cardType === "Bool") {
+        return <FlashcardBool title={card.title} selection={card.selection} />;
+      }
+    });
+  };
 
   const handleSelectMenu = (e) => {
     setSelectedCardType(e.target.innerText);
@@ -30,29 +67,28 @@ const SetsPage = () => {
     }
   };
 
-  const displayCards = async (req, res) => {
-    try {
-      const getAllCards = await axios.get("http://localhost:5000/getAllCards", {
-        headers: {
-          setIdentity: `${location.state.setId}`,
-        },
-      });
-      // setAllCards([...getAllCards.data.title]);
-      console.log(getAllCards.data);
-      setAllCards([...getAllCards.data]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const displayCards = async (req, res) => {
+  //   try {
+  //     const getAllCards = await axios.get("http://localhost:5000/getAllCards", {
+  //       headers: {
+  //         setIdentity: `${location.state.setId}`,
+  //       },
+  //     });
+  //     // setAllCards([...getAllCards.data.title]);
+  //     console.log(getAllCards.data);
+  //     setAllCards([...getAllCards.data]);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <>
-      <h1 className='text-3xl text-center my-4'>
-        {location.state.nameOfSet} set has an id of {location.state.setId}
-      </h1>
+      <h1 className='text-3xl text-center my-4'>{location.state.nameOfSet}</h1>
 
       <div className='flex flex-col gap-8 items-center'>
-        <p>You have no flashcards in this set</p>
+        {allCards.length === 0 && <p>You have no flashcards in this set</p>}
+
         <label htmlFor='my-modal-4' className='btn btn-outline'>
           Add a flashcard!
         </label>
@@ -77,20 +113,32 @@ const SetsPage = () => {
               <option onClick={handleSelectMenu}>True/False</option>
             </select>
             {selectedCardType === "Definition" ? (
-              <AddDefinitionCard id={location.state.setId} />
+              <AddDefinitionCard
+                id={location.state.setId}
+                setAllCards={setAllCards}
+                getAllCards={getAllCards}
+              />
             ) : selectedCardType === "Multiple Choice" ? (
-              <AddChoiceCard id={location.state.setId} />
+              <AddChoiceCard
+                id={location.state.setId}
+                setAllCards={setAllCards}
+                getAllCards={getAllCards}
+              />
             ) : selectedCardType === "True/False" ? (
-              <AddBoolCard id={location.state.setId} />
+              <AddBoolCard
+                id={location.state.setId}
+                setAllCards={setAllCards}
+                getAllCards={getAllCards}
+              />
             ) : (
               ""
             )}
           </label>
         </label>
       </div>
-      {allCards.map((card) => {
-        return <p>{card.title}</p>;
-      })}
+      <div className='w-full h-full grid grid-flow-row grid-cols-3'>
+        {displayAllCards(allCards)}
+      </div>
     </>
   );
 };

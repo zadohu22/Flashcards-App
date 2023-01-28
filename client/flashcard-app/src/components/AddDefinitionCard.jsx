@@ -2,14 +2,15 @@ import React from "react";
 import { useState } from "react";
 import CreateCard from "../Requests/CreateCard";
 
-const AddDefinitionCard = ({ id }) => {
+const AddDefinitionCard = ({ id, setAllCards, getAllCards }) => {
   const [title, setTitle] = useState("");
   const [definition, setDefinition] = useState("");
   const [msg, setMsg] = useState("");
   console.log(id);
 
-  const handleCreateCard = () => {
-    CreateCard(id, title, "Definition", setMsg, definition);
+  const handleCreateCard = async () => {
+    await CreateCard(id, title, "Definition", setMsg, definition);
+    await getAllCards(id, setAllCards);
   };
 
   return (

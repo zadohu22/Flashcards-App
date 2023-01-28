@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CreateCard from "../Requests/CreateCard";
 
-const AddChoiceCard = ({ id }) => {
+const AddChoiceCard = ({ id, setAllCards, getAllCards }) => {
   const [title, setTitle] = useState("");
   const [msg, setMsg] = useState("");
 
@@ -35,8 +35,8 @@ const AddChoiceCard = ({ id }) => {
     });
   };
 
-  const handleCreateCard = () => {
-    CreateCard(
+  const handleCreateCard = async () => {
+    await CreateCard(
       id,
       title,
       "Choice",
@@ -51,6 +51,7 @@ const AddChoiceCard = ({ id }) => {
       answers.answerFour,
       correctAnswer.fourCorrect
     );
+    await getAllCards(id, setAllCards);
   };
 
   return (

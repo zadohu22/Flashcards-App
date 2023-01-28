@@ -11,17 +11,61 @@ const CardsModel = db.define("cards", {
     primaryKey: true,
     autoIncrement: true,
   },
+
   setId: {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
+
   title: {
     type: Sequelize.TEXT,
     allowNull: false,
   },
+
   cardType: {
     type: Sequelize.TEXT,
     allowNull: false,
+  },
+
+  definition: {
+    type: Sequelize.TEXT,
+    allowNull: true,
+  },
+
+  answerOne: {
+    type: Sequelize.TEXT,
+  },
+
+  oneCorrect: {
+    type: Sequelize.BOOLEAN,
+  },
+
+  answerTwo: {
+    type: Sequelize.TEXT,
+  },
+
+  twoCorrect: {
+    type: Sequelize.BOOLEAN,
+  },
+
+  answerThree: {
+    type: Sequelize.TEXT,
+  },
+
+  threeCorrect: {
+    type: Sequelize.BOOLEAN,
+  },
+
+  answerFour: {
+    type: Sequelize.TEXT,
+  },
+
+  fourCorrect: {
+    type: Sequelize.BOOLEAN,
+  },
+
+  selection: {
+    type: Sequelize.BOOLEAN,
   },
 });
 
