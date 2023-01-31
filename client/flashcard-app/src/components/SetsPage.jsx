@@ -7,6 +7,9 @@ import axios from "axios";
 import FlashcardBool from "./Flashcard-Types/FlashcardBool";
 import FlashcardDefinition from "./Flashcard-Types/FlashcardDefinition";
 import FlashcardChoice from "./Flashcard-Types/FlashcardChoice";
+import DefinitionPreview from "./Flashcard-Types/DefinitionPreview";
+import ChoicePreview from "./Flashcard-Types/ChoicePreview";
+import BoolPreview from "./Flashcard-Types/BoolPreview";
 import { useEffect } from "react";
 import { getAllCards } from "../Requests/GetAllCards";
 import CreateCard from "../Requests/CreateCard";
@@ -18,8 +21,10 @@ const SetsPage = () => {
   const [allCards, setAllCards] = useState([]);
   const [test, setTest] = useState(false);
 
+  const setId = `${location.state.setId}`;
+
   useEffect(() => {
-    getAllCards(`${location.state.setId}`, setAllCards, allCards);
+    getAllCards(setId, setAllCards, allCards);
     // displayAllCards(allCards);
   }, []);
 
@@ -32,14 +37,16 @@ const SetsPage = () => {
     return allCards.map((card) => {
       if (card.cardType === "Definition") {
         return (
-          <FlashcardDefinition
+          <DefinitionPreview
             title={card.title}
             definition={card.definition}
+            cardId={card.id}
+            setId={setId}
           />
         );
       } else if (card.cardType === "Choice") {
         return (
-          <FlashcardChoice
+          <ChoicePreview
             title={card.title}
             answerOne={card.answerOne}
             answerTwo={card.answerTwo}
@@ -52,7 +59,7 @@ const SetsPage = () => {
           />
         );
       } else if (card.cardType === "Bool") {
-        return <FlashcardBool title={card.title} selection={card.selection} />;
+        return <BoolPreview title={card.title} selection={card.selection} />;
       }
     });
   };
@@ -66,21 +73,6 @@ const SetsPage = () => {
       setSelectedCardType("defaultSelected");
     }
   };
-
-  // const displayCards = async (req, res) => {
-  //   try {
-  //     const getAllCards = await axios.get("http://localhost:5000/getAllCards", {
-  //       headers: {
-  //         setIdentity: `${location.state.setId}`,
-  //       },
-  //     });
-  //     // setAllCards([...getAllCards.data.title]);
-  //     console.log(getAllCards.data);
-  //     setAllCards([...getAllCards.data]);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   return (
     <>
@@ -136,7 +128,7 @@ const SetsPage = () => {
           </label>
         </label>
       </div>
-      <div className='w-full h-full grid grid-flow-row grid-cols-3'>
+      <div className='w-full h-full grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center mt-4'>
         {displayAllCards(allCards)}
       </div>
     </>

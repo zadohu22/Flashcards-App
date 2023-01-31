@@ -1,7 +1,8 @@
 import axios from "axios";
 
-const CreateCard = async (
+export const UpdateCard = async (
   setId,
+  cardId,
   title,
   cardType,
   setMsg,
@@ -19,7 +20,7 @@ const CreateCard = async (
   // setNewcardGroupOverlay(false);
 
   const cardData = {
-    setId: setId,
+    cardId: cardId,
     title: title,
     cardType: cardType,
   };
@@ -49,7 +50,7 @@ const CreateCard = async (
   if (cardType === "Definition") {
     try {
       await axios
-        .post("http://localhost:5000/addCard", {
+        .put("http://localhost:5000/updateCard", {
           cardData,
           DefinitionData,
         })
@@ -62,7 +63,7 @@ const CreateCard = async (
   } else if (cardType === "Choice") {
     try {
       await axios
-        .post("http://localhost:5000/addCard", {
+        .put("http://localhost:5000/updateCard", {
           cardData,
           ChoiceData,
         })
@@ -75,7 +76,7 @@ const CreateCard = async (
   } else if (cardType === "Bool") {
     try {
       await axios
-        .post("http://localhost:5000/addCard", {
+        .put("http://localhost:5000/updateCard", {
           cardData,
           BoolData,
         })
@@ -87,5 +88,3 @@ const CreateCard = async (
     }
   }
 };
-
-export default CreateCard;

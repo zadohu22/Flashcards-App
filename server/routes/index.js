@@ -6,6 +6,7 @@ import { refreshToken } from "../controllers/RefreshToken.js";
 import { GetCardSets } from "../models/GetCardSets.js";
 import { AddCard } from "../controllers/AddCard.js";
 import { GetAllCards } from "../models/GetAllCards.js";
+import { UpdateCard } from "../controllers/UpdateCard.js";
 const router = express.Router();
 
 router.get("/users", verifyToken, getUsers);
@@ -15,6 +16,7 @@ router.post("/addSet", AddSet);
 router.post("/addCard", AddCard);
 router.get("/getSets", GetCardSets);
 router.get("/getAllCards", GetAllCards);
+router.put("/updateCard", UpdateCard);
 router.get("/token", refreshToken);
 router.delete("/logout", Logout);
 

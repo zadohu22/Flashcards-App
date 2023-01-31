@@ -15,11 +15,6 @@ export const GetAllCards = async (req, res) => {
       },
     });
 
-    // const findDefinitionCards = await CardsModel.findAll({
-    //   raw: true,
-    //   where:
-    // })
-
     const allCards = await CardsModel.findAll({
       raw: true,
       where: {

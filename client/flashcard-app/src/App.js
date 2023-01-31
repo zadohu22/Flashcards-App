@@ -4,6 +4,9 @@ import { BrowserRouter as Router } from "react-router-dom";
 import FlashcardDefinition from "./components/Flashcard-Types/FlashcardDefinition";
 import FlashcardChoice from "./components/Flashcard-Types/FlashcardChoice";
 import FlashcardBool from "./components/Flashcard-Types/FlashcardBool";
+import BoolPreview from "./components/Flashcard-Types/BoolPreview";
+import ChoicePreview from "./components/Flashcard-Types/ChoicePreview";
+import DefinitionPreview from "./components/Flashcard-Types/DefinitionPreview";
 
 function App() {
   return (
@@ -11,12 +14,9 @@ function App() {
       <RouteSwitch />
     </Router>
     // <>
-    //   <FlashcardDefinition
-    //     term={"test term"}
-    //     definition={"this is the definition"}
-    //   />
-    //   <FlashcardChoice />
-    //   <FlashcardBool />
+    //   <BoolPreview />
+    //   <ChoicePreview />
+    //   <DefinitionPreview />
     // </>
   );
 }
