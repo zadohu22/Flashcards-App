@@ -17,15 +17,12 @@ import CreateCard from "../Requests/CreateCard";
 const SetsPage = () => {
   const location = useLocation();
   const [selectedCardType, setSelectedCardType] = useState();
-  const [modalClosed, setModalClosed] = useState(false);
   const [allCards, setAllCards] = useState([]);
-  const [test, setTest] = useState(false);
 
   const setId = `${location.state.setId}`;
 
   useEffect(() => {
     getAllCards(setId, setAllCards, allCards);
-    // displayAllCards(allCards);
   }, []);
 
   useEffect(() => {
@@ -42,12 +39,15 @@ const SetsPage = () => {
             definition={card.definition}
             cardId={card.id}
             setId={setId}
+            setAllCards={setAllCards}
           />
         );
       } else if (card.cardType === "Choice") {
         return (
           <ChoicePreview
             title={card.title}
+            cardId={card.id}
+            setId={setId}
             answerOne={card.answerOne}
             answerTwo={card.answerTwo}
             answerThree={card.answerThree}
@@ -56,10 +56,21 @@ const SetsPage = () => {
             twoCorrect={card.twoCorrect}
             threeCorrect={card.threeCorrect}
             fourCorrect={card.fourCorrect}
+            setAllCards={setAllCards}
+            getAllCards={getAllCards}
           />
         );
       } else if (card.cardType === "Bool") {
-        return <BoolPreview title={card.title} selection={card.selection} />;
+        return (
+          <BoolPreview
+            title={card.title}
+            selection={card.selection}
+            cardId={card.id}
+            setId={setId}
+            setAllCards={setAllCards}
+            getAllCards={getAllCards}
+          />
+        );
       }
     });
   };

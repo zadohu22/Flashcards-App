@@ -30,29 +30,39 @@ export const UpdateCard = async (req, res) => {
     }
   } else if (cardData.cardType === "Choice") {
     try {
-      await CardsModel.update({
-        title: cardData.title,
-        cardType: cardData.cardType,
-        answerOne: choiceData.answerOne,
-        oneCorrect: choiceData.oneCorrect,
-        answerTwo: choiceData.answerTwo,
-        twoCorrect: choiceData.twoCorrect,
-        answerThree: choiceData.answerThree,
-        threeCorrect: choiceData.threeCorrect,
-        answerFour: choiceData.answerFour,
-        fourCorrect: choiceData.fourCorrect,
-      });
+      await CardsModel.update(
+        {
+          title: cardData.title,
+          cardType: cardData.cardType,
+          answerOne: choiceData.answerOne,
+          oneCorrect: choiceData.oneCorrect,
+          answerTwo: choiceData.answerTwo,
+          twoCorrect: choiceData.twoCorrect,
+          answerThree: choiceData.answerThree,
+          threeCorrect: choiceData.threeCorrect,
+          answerFour: choiceData.answerFour,
+          fourCorrect: choiceData.fourCorrect,
+        },
+        {
+          where: { id: cardData.cardId },
+        }
+      );
       res.json({ msg: "Card Updated" });
     } catch (error) {
       console.log(error);
     }
   } else if (cardData.cardType === "Bool") {
     try {
-      await CardsModel.update({
-        title: cardData.title,
-        cardType: cardData.cardType,
-        selection: boolData.selection,
-      });
+      await CardsModel.update(
+        {
+          title: cardData.title,
+          cardType: cardData.cardType,
+          selection: boolData.selection,
+        },
+        {
+          where: { id: cardData.cardId },
+        }
+      );
       res.json({ msg: "Card Updated" });
     } catch (error) {
       console.log(error);
