@@ -80,7 +80,10 @@ const EditChoiceCard = ({
     <div className='mt-8 flex flex-col gap-4 border-2 border-gray-100 relative'>
       <p
         className='absolute top-0 right-4 cursor-pointer text-xl'
-        onClick={() => setClicked(!clicked)}
+        onClick={async () => {
+          await getAllCards(setId, setAllCards);
+          setClicked(!clicked);
+        }}
       >
         x
       </p>

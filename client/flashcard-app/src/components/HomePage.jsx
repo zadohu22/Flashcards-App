@@ -95,7 +95,7 @@ const HomePage = () => {
         </div>
       )}
 
-      <div className='main-window w-[77%] h-full flex flex-col items-center justify-center'>
+      <div className='main-window w-[77%] min-h-[100vh] flex flex-col items-center justify-center'>
         <h1 className='text-5xl absolute top-4'>Flashcards</h1>
         <h2 className='text-3xl'>Welcome to flashcards, blah blah</h2>
         <button onClick={() => setNewcardGroupOverlay(true)} className='mt-4'>

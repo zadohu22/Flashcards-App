@@ -13,11 +13,14 @@ import BoolPreview from "./Flashcard-Types/BoolPreview";
 import { useEffect } from "react";
 import { getAllCards } from "../Requests/GetAllCards";
 import CreateCard from "../Requests/CreateCard";
+import CardPreview from "./CardPreview";
 
 const SetsPage = () => {
   const location = useLocation();
   const [selectedCardType, setSelectedCardType] = useState();
   const [allCards, setAllCards] = useState([]);
+  const [clicked, setClicked] = useState(false);
+  const [cardInfo, setCardInfo] = useState(null);
 
   const setId = `${location.state.setId}`;
 
@@ -26,11 +29,34 @@ const SetsPage = () => {
   }, []);
 
   useEffect(() => {
-    displayAllCards(allCards);
-    console.log("from use effect", allCards);
+    displayAllCardsBasic(allCards);
   }, [allCards]);
 
-  const displayAllCards = (cards) => {
+  const handleViewCard = (card) => {
+    setClicked(!clicked);
+    setCardInfo(card);
+    console.log(cardInfo);
+  };
+
+  const displayAllCardsBasic = (cards) => {
+    return allCards.map((card, index) => {
+      return (
+        <div className='card-preview'>
+          <p>{card.cardType} Card</p>
+          <h2 className=' text-xl'>{card.title}</h2>
+          <div className='flex w-full'>
+            <button onClick={() => handleViewCard(card)}>View Card</button>
+            <button className='grow'>Edit Card</button>
+            <button className='shrink hover:bg-error hover:text-white'>
+              Delete Card
+            </button>
+          </div>
+        </div>
+      );
+    });
+  };
+
+  const displayAllCardsInfo = (cards) => {
     return allCards.map((card) => {
       if (card.cardType === "Definition") {
         return (
@@ -79,7 +105,7 @@ const SetsPage = () => {
     setSelectedCardType(e.target.innerText);
   };
 
-  const handleModalClick = (e) => {
+  const handleResetDefaultSelected = (e) => {
     if (e.target === e.currentTarget) {
       setSelectedCardType("defaultSelected");
     }
@@ -87,20 +113,30 @@ const SetsPage = () => {
 
   return (
     <>
-      <h1 className='text-3xl text-center my-4'>{location.state.nameOfSet}</h1>
+      {clicked && (
+        <CardPreview
+          cardInfo={cardInfo}
+          setClicked={setClicked}
+          clicked={clicked}
+          setAllCards={setAllCards}
+          getAllCards={getAllCards}
+        />
+      )}
+
+      <h1 className='text-3xl text-center'>{location.state.nameOfSet}</h1>
 
       <div className='flex flex-col gap-8 items-center'>
         {allCards.length === 0 && <p>You have no flashcards in this set</p>}
 
-        <label htmlFor='my-modal-4' className='btn btn-outline'>
+        <label htmlFor='my-modal-addCard' className='btn btn-outline'>
           Add a flashcard!
         </label>
 
-        <input type='checkbox' id='my-modal-4' className='modal-toggle' />
+        <input type='checkbox' id='my-modal-addCard' className='modal-toggle' />
         <label
-          htmlFor='my-modal-4'
+          htmlFor='my-modal-addCard'
           className='modal cursor-pointer'
-          onClick={handleModalClick}
+          onClick={handleResetDefaultSelected}
         >
           <label className='modal-box relative'>
             <h1 className='mb-4'>New Flashcard</h1>
@@ -140,7 +176,7 @@ const SetsPage = () => {
         </label>
       </div>
       <div className='w-full h-full grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center mt-4'>
-        {displayAllCards(allCards)}
+        {displayAllCardsBasic(allCards)}
       </div>
     </>
   );

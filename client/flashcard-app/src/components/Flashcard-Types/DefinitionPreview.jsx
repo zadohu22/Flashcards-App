@@ -30,7 +30,7 @@ const DefinitionPreview = ({
   return (
     <>
       {clicked === true ? (
-        <div className='relative h-72 w-72 border-gray-50 border-2 rounded-lg flex flex-col items-center'>
+        <div className='relative border-gray-50 border-2 rounded-lg flex flex-col items-center'>
           <p
             className='text-xl absolute top-0 right-2 cursor-pointer'
             onClick={() => setClicked(!clicked)}
@@ -55,8 +55,8 @@ const DefinitionPreview = ({
           </button>
         </div>
       ) : (
-        <div className='card-preview'>
-          <h2 className='text-2xl mt-4'>{title}</h2>
+        <div className='flex flex-col items-center justify-center gap-4 relative'>
+          <h2 className='text-3xl font-bold mt-4'>{title}</h2>
           <p className='mb-20 text-center'>{definition}</p>
           <button className='w-24 mb-4' onClick={() => setClicked(!clicked)}>
             Edit
