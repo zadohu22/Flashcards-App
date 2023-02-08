@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { getAllCards } from "../Requests/GetAllCards";
 import CreateCard from "../Requests/CreateCard";
 import CardPreview from "./CardPreview";
+import { DeleteCard } from "../Requests/DeleteCard";
 
 const SetsPage = () => {
   const location = useLocation();
@@ -21,6 +22,8 @@ const SetsPage = () => {
   const [allCards, setAllCards] = useState([]);
   const [clicked, setClicked] = useState(false);
   const [cardInfo, setCardInfo] = useState(null);
+  const [edit, setEdit] = useState(false);
+  const [msg, setMsg] = useState("");
 
   const setId = `${location.state.setId}`;
 
@@ -38,16 +41,33 @@ const SetsPage = () => {
     console.log(cardInfo);
   };
 
+  const handleDeleteCard = async (card, setId, setAllCards) => {
+    try {
+      console.log(setId, setAllCards);
+      await DeleteCard(card.id, setMsg, setId, setAllCards, allCards);
+      // await getAllCards(setId, setAllCards, allCards);
+      console.log("getcards");
+      await getAllCards(setId, setAllCards);
+    } catch (error) {
+      console.log(error);
+    }
+
+    displayAllCardsBasic(allCards);
+    console.log("from handleDeleteCard", allCards);
+  };
+
   const displayAllCardsBasic = (cards) => {
     return allCards.map((card, index) => {
       return (
-        <div className='card-preview'>
+        <div className='card-preview mb-4'>
           <p>{card.cardType} Card</p>
           <h2 className=' text-xl'>{card.title}</h2>
-          <div className='flex w-full'>
+          <div className='flex w-full justify-center items-center gap-4 mb-2'>
             <button onClick={() => handleViewCard(card)}>View Card</button>
-            <button className='grow'>Edit Card</button>
-            <button className='shrink hover:bg-error hover:text-white'>
+            <button
+              className='hover:bg-error hover:text-white'
+              onClick={() => handleDeleteCard(card, setId, setAllCards)}
+            >
               Delete Card
             </button>
           </div>
@@ -120,6 +140,8 @@ const SetsPage = () => {
           clicked={clicked}
           setAllCards={setAllCards}
           getAllCards={getAllCards}
+          edit={edit}
+          setEdit={setEdit}
         />
       )}
 

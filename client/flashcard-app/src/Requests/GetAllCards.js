@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getAllCards = async (setId, setAllCards, allCards) => {
   try {
-    const getCards = await axios
+    await axios
       .get("http://localhost:5000/getAllCards", {
         headers: {
           setIdentity: `${setId}`,

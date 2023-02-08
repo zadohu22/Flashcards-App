@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { UpdateCard } from "../Requests/UpdateCard";
 
 const EditChoiceCard = ({
-  title,
+  prevTitle,
   cardId,
   setId,
   prevAnswerOne,
@@ -13,8 +13,11 @@ const EditChoiceCard = ({
   getAllCards,
   clicked,
   setClicked,
+  setAnswers,
+  setCorrect,
+  setChoiceTitle,
 }) => {
-  const [cardTitle, setCardTitle] = useState(title);
+  // const [cardTitle, setCardTitle] = useState(title);
   const [msg, setMsg] = useState("");
 
   const [newCardAnswers, setNewCardAnswers] = useState({
@@ -23,6 +26,8 @@ const EditChoiceCard = ({
     newAnswerThree: prevAnswerThree,
     newAnswerFour: prevAnswerFour,
   });
+
+  const [newTitle, setNewTitle] = useState(prevTitle);
 
   // const [newAnswers, setNewAnswers] = useState({
   //   newAnswerOne: "",
@@ -58,7 +63,7 @@ const EditChoiceCard = ({
     await UpdateCard(
       null,
       cardId,
-      cardTitle,
+      newTitle,
       "Choice",
       setMsg,
       null,
@@ -74,6 +79,19 @@ const EditChoiceCard = ({
     await getAllCards(setId, setAllCards);
     console.log(setId);
     setClicked(!clicked);
+    setAnswers({
+      A: newCardAnswers.newAnswerOne,
+      B: newCardAnswers.newAnswerTwo,
+      C: newCardAnswers.newAnswerThree,
+      D: newCardAnswers.newAnswerFour,
+    });
+    setCorrect({
+      A: correctAnswer.oneCorrect,
+      B: correctAnswer.twoCorrect,
+      C: correctAnswer.threeCorrect,
+      D: correctAnswer.fourCorrect,
+    });
+    setChoiceTitle(newTitle);
   };
 
   return (
@@ -92,8 +110,8 @@ const EditChoiceCard = ({
           type='text'
           placeholder='Add Question'
           className='input w-full max-w-xs'
-          value={cardTitle}
-          onChange={(e) => setCardTitle(e.target.value)}
+          value={newTitle}
+          onChange={(e) => setNewTitle(e.target.value)}
         />
         <p className='self-center'>Correct Answer?</p>
       </div>
@@ -188,6 +206,9 @@ const EditChoiceCard = ({
             )
           }
         />
+        <button onClick={() => console.log(correctAnswer.oneCorrect)}>
+          test
+        </button>
       </div>
 
       <button onClick={handleSendUpdate}>Save changes</button>
