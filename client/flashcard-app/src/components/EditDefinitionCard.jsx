@@ -57,7 +57,7 @@ const EditDefinitionCard = ({
       />
       <p className='mt-8'>Change Definition:</p>
       <textarea
-        className='textarea border-2 border-gray-100'
+        className='textarea border-2 border-gray-100 h-36 w-[90%]'
         onChange={(e) => setNewDefinition(e.target.value)}
         value={newDefinition}
       ></textarea>

@@ -1,15 +1,20 @@
 .flip-card{
     background-color: transparent;
-    width: 300px;
-    height: 300px;
+    width: 90%;
+    /* height: 300px; */
+    /* height: auto; */
+    min-height: 300px;
     perspective: 1000px;
+    display: flex;
+    flex-wrap: wrap
 }
+
 
 .flip-card-inner{
     position: relative;
+    flex-wrap: wrap;
     width: 100%;
-    height: 100%;
-    text-align: center;
+    height: 100%;    
     transition: transform 0.6s;
     transform-style: preserve-3d;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -25,6 +30,7 @@
     height: 100%;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    flex-wrap: wrap;
 }
 
 .flip-card-front{
@@ -33,4 +39,6 @@
 
 .flip-card-back{
     transform: rotateY(180deg);
+    padding: 40px;
+    overflow: scroll;
 }

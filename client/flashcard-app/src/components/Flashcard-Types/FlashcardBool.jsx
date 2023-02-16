@@ -1,20 +1,31 @@
 import React from "react";
 import axios from "axios";
 
-const FlashcardBool = ({ title, selection }) => {
-  const handleSubmit = () => {};
+const FlashcardBool = ({
+  currentCard,
+  setBoolChecked,
+  boolSelectedOption,
+  setBoolSelectedOption,
+}) => {
+  const handleOptionChange = (event) => {
+    setBoolSelectedOption(event.target.value);
+  };
 
   return (
-    <div className='w-[300px] h-[300px] bg-primary text-black flex flex-col justify-around items-center'>
-      <h1 className='text-xl'>{title}</h1>
+    <div className='w-[70%] min-h-[300px] p-8 shadow-2xl bg-slate-600 rounded-xl text-black flex flex-col justify-around items-center'>
+      <h1 className='text-xl'>{currentCard.title}</h1>
 
-      <form className='flex flex-col gap-2 self-start' onSubmit={handleSubmit}>
+      <form className='flex flex-col gap-2'>
         <div className='flex gap-2'>
           <input
             type='radio'
             name='radio-4'
+            value='optionTrue'
+            checked={boolSelectedOption === "optionTrue"}
             className='radio radio-secondary'
             id='inputTrue'
+            onClick={() => setBoolChecked({ selection: 1 })}
+            onChange={handleOptionChange}
           />
           <label htmlFor='inputTrue'>True</label>
         </div>
@@ -23,12 +34,15 @@ const FlashcardBool = ({ title, selection }) => {
           <input
             type='radio'
             name='radio-4'
+            value='optionFalse'
             className='radio radio-secondary'
             id='inputFalse'
+            checked={boolSelectedOption === "optionFalse"}
+            onClick={() => setBoolChecked({ selection: 0 })}
+            onChange={handleOptionChange}
           />
           <label htmlFor='inputFalse'>False</label>
         </div>
-        <button>submit</button>
       </form>
     </div>
   );

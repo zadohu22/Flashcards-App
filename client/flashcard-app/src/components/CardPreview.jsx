@@ -70,9 +70,13 @@ const CardPreview = ({
                 setChangeDefinition={setChangeDefinition}
               />
             ) : (
-              <div className='flex flex-col items-center justify-center gap-4 relative'>
-                <h2 className='text-3xl font-bold mt-4'>{definitionTitle}</h2>
-                <p className='mb-20 text-center'>{changeDefinition}</p>
+              <div className='h-[500px] flex flex-col items-center justify-center gap-4 relative'>
+                <h2 className='text-3xl font-bold mt-4 max-w-full break-words'>
+                  {definitionTitle}
+                </h2>
+                <p className='mb-20 max-w-full break-words overflow-scroll'>
+                  {changeDefinition}
+                </p>
                 <button onClick={() => setEdit(!edit)}>Edit Card</button>
               </div>
             )

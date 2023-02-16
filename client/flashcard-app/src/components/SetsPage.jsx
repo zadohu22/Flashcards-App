@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AddBoolCard from "./AddBoolCard";
 import AddChoiceCard from "./AddChoiceCard";
 import AddDefinitionCard from "./AddDefinitionCard";
@@ -18,6 +18,7 @@ import { DeleteCard } from "../Requests/DeleteCard";
 
 const SetsPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [selectedCardType, setSelectedCardType] = useState();
   const [allCards, setAllCards] = useState([]);
   const [clicked, setClicked] = useState(false);
@@ -61,7 +62,7 @@ const SetsPage = () => {
       return (
         <div className='card-preview mb-4'>
           <p>{card.cardType} Card</p>
-          <h2 className=' text-xl'>{card.title}</h2>
+          <h2 className='break-words text-xl'>{card.title}</h2>
           <div className='flex w-full justify-center items-center gap-4 mb-2'>
             <button onClick={() => handleViewCard(card)}>View Card</button>
             <button
@@ -76,49 +77,8 @@ const SetsPage = () => {
     });
   };
 
-  const displayAllCardsInfo = (cards) => {
-    return allCards.map((card) => {
-      if (card.cardType === "Definition") {
-        return (
-          <DefinitionPreview
-            title={card.title}
-            definition={card.definition}
-            cardId={card.id}
-            setId={setId}
-            setAllCards={setAllCards}
-          />
-        );
-      } else if (card.cardType === "Choice") {
-        return (
-          <ChoicePreview
-            title={card.title}
-            cardId={card.id}
-            setId={setId}
-            answerOne={card.answerOne}
-            answerTwo={card.answerTwo}
-            answerThree={card.answerThree}
-            answerFour={card.answerFour}
-            oneCorrect={card.oneCorrect}
-            twoCorrect={card.twoCorrect}
-            threeCorrect={card.threeCorrect}
-            fourCorrect={card.fourCorrect}
-            setAllCards={setAllCards}
-            getAllCards={getAllCards}
-          />
-        );
-      } else if (card.cardType === "Bool") {
-        return (
-          <BoolPreview
-            title={card.title}
-            selection={card.selection}
-            cardId={card.id}
-            setId={setId}
-            setAllCards={setAllCards}
-            getAllCards={getAllCards}
-          />
-        );
-      }
-    });
+  const handlePlayGameClick = () => {
+    navigate("/play", { state: { allCards: allCards, setId: setId } });
   };
 
   const handleSelectMenu = (e) => {
@@ -145,7 +105,7 @@ const SetsPage = () => {
         />
       )}
 
-      <h1 className='text-3xl text-center'>{location.state.nameOfSet}</h1>
+      <h1 className='text-3xl text-center mb-4'>{location.state.nameOfSet}</h1>
 
       <div className='flex flex-col gap-8 items-center'>
         {allCards.length === 0 && <p>You have no flashcards in this set</p>}
@@ -153,6 +113,9 @@ const SetsPage = () => {
         <label htmlFor='my-modal-addCard' className='btn btn-outline'>
           Add a flashcard!
         </label>
+        {allCards.length !== 0 && (
+          <button onClick={handlePlayGameClick}>Play Game</button>
+        )}
 
         <input type='checkbox' id='my-modal-addCard' className='modal-toggle' />
         <label

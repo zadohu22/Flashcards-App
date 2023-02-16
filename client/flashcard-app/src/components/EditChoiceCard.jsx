@@ -95,9 +95,9 @@ const EditChoiceCard = ({
   };
 
   return (
-    <div className='mt-8 flex flex-col gap-4 border-2 border-gray-100 relative'>
+    <div className='mt-8 flex flex-col gap-4 relative'>
       <p
-        className='absolute top-0 right-4 cursor-pointer text-xl'
+        className='absolute top-[-20px] right-4 cursor-pointer text-xl'
         onClick={async () => {
           await getAllCards(setId, setAllCards);
           setClicked(!clicked);
@@ -206,9 +206,6 @@ const EditChoiceCard = ({
             )
           }
         />
-        <button onClick={() => console.log(correctAnswer.oneCorrect)}>
-          test
-        </button>
       </div>
 
       <button onClick={handleSendUpdate}>Save changes</button>
