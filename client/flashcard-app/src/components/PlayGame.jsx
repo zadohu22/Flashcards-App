@@ -155,6 +155,11 @@ const PlayGame = ({ card }) => {
     });
   };
 
+  const handleNextCard = () => {
+    displayCard();
+    setWelcome(false);
+  };
+
   const resetCards = () => {
     setRemainingCards(cardsList);
     setWelcome(true);
@@ -174,7 +179,7 @@ const PlayGame = ({ card }) => {
         <div className='h-40px relative bottom-10'>
           {welcome && (
             <ReactTypingEffect
-              className='text-2xl'
+              className='text-2xl select-none'
               text={"Good luck!"}
               eraseDelay={1000000000}
               cursor={<p></p>}
@@ -257,7 +262,7 @@ const PlayGame = ({ card }) => {
               Play Again
             </button>
           ) : currentCard.cardType === "Definition" ? (
-            <button className='mb-20' onClick={displayCard}>
+            <button className='mb-20' onClick={handleNextCard}>
               Next Card
             </button>
           ) : (

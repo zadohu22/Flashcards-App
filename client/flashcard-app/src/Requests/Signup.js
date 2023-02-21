@@ -6,7 +6,8 @@ const handleSignUp = async (
   password,
   confPassword,
   navigate,
-  setMsg
+  setMsg,
+  msg
 ) => {
   e.preventDefault();
   try {
@@ -23,6 +24,7 @@ const handleSignUp = async (
   } catch (error) {
     if (error.response) {
       setMsg(error.response.data.msg);
+      console.log(msg);
     }
   }
 };

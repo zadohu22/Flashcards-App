@@ -61,7 +61,7 @@ const SetsPage = () => {
     return allCards.map((card, index) => {
       return (
         <div className='card-preview mb-4'>
-          <p>{card.cardType} Card</p>
+          <p className='select-none'>{card.cardType} Card</p>
           <h2 className='break-words text-xl'>{card.title}</h2>
           <div className='flex w-full justify-center items-center gap-4 mb-2'>
             <button onClick={() => handleViewCard(card)}>View Card</button>

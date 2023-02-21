@@ -13,10 +13,12 @@ const FlashcardDefinition = ({ currentCard }) => {
     >
       <div className='flip-card-inner'>
         <div className='flip-card-front flex justify-center items-center bg-secondary'>
-          <h1 className='text-2xl text-black flex-wrap'>{currentCard.title}</h1>
+          <h1 className='text-2xl text-black flex-wrap select-none'>
+            {currentCard.title}
+          </h1>
         </div>
-        <div className='flip-card-back flex justify-center items-center bg-secondary flex-wrap w-full h-full'>
-          <h1 className='text-xl text-black flex-wrap wrap w-full h-full break-words'>
+        <div className='flip-card-back flex justify-center items-center bg-secondary flex-wrap w-full h-full hide-scroll-bars'>
+          <h1 className='text-xl text-black flex-wrap wrap w-full h-full break-words select-none '>
             {currentCard.definition}
           </h1>
         </div>

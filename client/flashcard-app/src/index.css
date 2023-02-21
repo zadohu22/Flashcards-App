@@ -40,13 +40,18 @@ body, #root, #app{
 }
 
 button{
-  @apply btn btn-outline btn-primary
+  @apply btn btn-outline btn-primary select-none
 }
 
 input[type=text]{
   border: 1px solid white;
 }
 
-.game-card{
-  
+.hide-scroll-bars{
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.hide-scroll-bars::-webkit-scrollbar{
+  display: none;
 }

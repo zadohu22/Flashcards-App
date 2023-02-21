@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const Authenticate = async (e, email, password, setMsg, navigate) => {
+const Authenticate = async (e, email, password, setMsg, navigate, msg) => {
   e.preventDefault();
   try {
     await axios
@@ -16,6 +16,7 @@ const Authenticate = async (e, email, password, setMsg, navigate) => {
   } catch (error) {
     if (error.response) {
       setMsg(error.response.data.msg);
+      console.log(msg);
     }
   }
 };

@@ -24,7 +24,7 @@ const FlashcardChoice = ({
 
   return (
     // <div className='w-full h-full flex justify-center items-center'>
-    <div className='w-[70%] min-h-[300px] p-8 shadow-2xl bg-slate-600 rounded-xl text-black flex flex-col justify-around items-center mx-auto'>
+    <div className='w-[70%] md:w-[50%] max-w-2xl h-[300px] p-8 shadow-2xl bg-slate-600 rounded-xl text-black flex flex-col justify-around items-center mx-auto'>
       <h1 className='text-xl mb-8'>{currentCard.title}</h1>
 
       <form className='flex flex-col gap-2 self-start'>
@@ -46,14 +46,16 @@ const FlashcardChoice = ({
               )
             }
           />
-          <label htmlFor='inputOne'>{currentCard.answerOne}</label>
+          <label className='select-none' htmlFor='inputOne'>
+            {currentCard.answerOne}
+          </label>
         </div>
 
         <div className='flex gap-2'>
           <input
             type='radio'
             name='radio-4'
-            className='radio radio-secondary'
+            className='radio radio-secondary select-none'
             id='inputTwo'
             value='option2'
             checked={selectedOption === "option2"}
@@ -67,7 +69,9 @@ const FlashcardChoice = ({
               )
             }
           />
-          <label htmlFor='inputTwo'>{currentCard.answerTwo}</label>
+          <label className='select-none' htmlFor='inputTwo'>
+            {currentCard.answerTwo}
+          </label>
         </div>
 
         <div className='flex gap-2'>
@@ -88,7 +92,9 @@ const FlashcardChoice = ({
               )
             }
           />
-          <label htmlFor='inputThree'>{currentCard.answerThree}</label>
+          <label className='select-none' htmlFor='inputThree'>
+            {currentCard.answerThree}
+          </label>
         </div>
 
         <div className='flex gap-2'>
@@ -109,7 +115,9 @@ const FlashcardChoice = ({
               )
             }
           />
-          <label htmlFor='inputFour'>{currentCard.answerFour}</label>
+          <label className='select-none' htmlFor='inputFour'>
+            {currentCard.answerFour}
+          </label>
         </div>
       </form>
     </div>

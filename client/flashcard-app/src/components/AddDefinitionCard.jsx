@@ -22,7 +22,7 @@ const AddDefinitionCard = ({ id, setAllCards, getAllCards }) => {
         onChange={(e) => setTitle(e.target.value)}
       />
       <textarea
-        className='textarea'
+        className='textarea border-2 border-gray-100'
         placeholder='Add definition'
         onChange={(e) => setDefinition(e.target.value)}
       ></textarea>

@@ -1,14 +1,27 @@
 .flip-card{
     background-color: transparent;
-    width: 90%;
+    width: 70%;
+    max-width: 42rem;
     /* height: 300px; */
     /* height: auto; */
-    min-height: 300px;
+    height: 300px;
     perspective: 1000px;
     display: flex;
     flex-wrap: wrap
 }
 
+@media(min-width: 768px){
+    .flip-card{
+        background-color: transparent;
+        width: 50%;
+        /* height: 300px; */
+        /* height: auto; */
+        height: 300px;
+        perspective: 1000px;
+        display: flex;
+        flex-wrap: wrap
+    }
+}
 
 .flip-card-inner{
     position: relative;

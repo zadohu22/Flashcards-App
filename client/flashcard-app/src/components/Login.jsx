@@ -55,6 +55,15 @@ const Login = () => {
           <div className='text-red-500'>No User found, please sign up.</div>
         )} */}
 
+        {msg === "User doesn't exist, please sign up." && (
+          <div className='text-red-500'>
+            User doesn't exist, please sign up.
+          </div>
+        )}
+        {msg === "Wrong Password" && (
+          <div className='text-red-500'>Incorrect password, try again.</div>
+        )}
+
         <div className='w-[80%]'>
           <button
             type='submit'
@@ -63,6 +72,14 @@ const Login = () => {
           >
             Sign in!
           </button>
+        </div>
+        <div className='flex justify-center'>
+          <a
+            className='cursor-pointer text-slate-300 mt-2'
+            onClick={() => navigate("/")}
+          >
+            Don't have an account? Sign up!
+          </a>
         </div>
       </form>
     </div>

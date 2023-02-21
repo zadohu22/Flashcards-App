@@ -20,6 +20,10 @@ const SignUp = () => {
       <form
         method='get'
         className='form-control grow flex items-center max-w-[90%] gap-2 login-form'
+        onSubmit={(e) => {
+          handleSignUp(e, email, password, confPassword, navigate, setMsg, msg);
+          console.log(msg);
+        }}
       >
         <label htmlFor='email' className='input-group flex max-w-full'>
           <span className='grow shrink-0 flex justify-center'>Email:</span>
@@ -58,23 +62,24 @@ const SignUp = () => {
             onChange={(e) => setConfPassword(e.target.value)}
           />
         </label>
-        {/* {signUpUserExists === true && (
+        {msg === "User already exists" && (
           <div className='text-red-500'>
             User already exists, please sign in.
           </div>
         )}
-        {signInNoUser === true && (
-          <div className='text-red-500'>No User found, please sign up.</div>
+
+        {msg === "Password and Confirm Password do not match" && (
+          <div className='text-red-500'>Passwords don't match, try again.</div>
+        )}
+
+        {/* {msg === "User doesn't exist, please sign up." && (
+          <div className='text-red-500'>
+            User doesn't exist, please sign up.
+          </div>
         )} */}
 
         <div className='w-[80%]'>
-          <button
-            type='submit'
-            className='mt-2 w-full '
-            onClick={(e) =>
-              handleSignUp(e, email, password, confPassword, navigate, setMsg)
-            }
-          >
+          <button type='submit' className='mt-2 w-full '>
             Sign up!
           </button>
           <div className='flex justify-center'>

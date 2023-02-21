@@ -38,7 +38,7 @@ const EditDefinitionCard = ({
   };
 
   return (
-    <div className='relative border-gray-50 border-2 rounded-lg flex flex-col items-center'>
+    <div className='relative h-[500px]  border-gray-50 border-2 rounded-lg flex flex-col items-center justify-around'>
       <p
         className='absolute top-0 right-4 cursor-pointer text-xl'
         onClick={async () => {
@@ -57,7 +57,7 @@ const EditDefinitionCard = ({
       />
       <p className='mt-8'>Change Definition:</p>
       <textarea
-        className='textarea border-2 border-gray-100 h-36 w-[90%]'
+        className='textarea border-2 border-gray-100 h-44 w-[90%] hide-scroll-bars resize-none'
         onChange={(e) => setNewDefinition(e.target.value)}
         value={newDefinition}
       ></textarea>

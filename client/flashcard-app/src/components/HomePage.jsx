@@ -83,7 +83,7 @@ const HomePage = () => {
           onClick={handleNewcardGroupOverlayClick}
           className='fixed top-0 left-0 right-0 bottom-0 z-50 bg-black opacity-[97%] flex flex-col gap-4 justify-center items-center'
         >
-          <h2 className='text-3xl'>Add new Flashcard set</h2>
+          <h2 className='text-3xl select-none'>Add new Flashcard set</h2>
           <input
             type='text'
             placeholder='Name of new set'
@@ -96,22 +96,26 @@ const HomePage = () => {
       )}
 
       <div className='main-window w-[77%] min-h-[100vh] flex flex-col items-center justify-center'>
-        <h1 className='text-5xl absolute top-4'>Flashcards</h1>
-        <h2 className='text-3xl'>Welcome to flashcards, blah blah</h2>
+        <h1 className='text-5xl absolute top-4 select-none'>Flashcards</h1>
+        <h2 className='text-3xl select-none'>
+          Welcome to flashcards, blah blah
+        </h2>
         <button onClick={() => setNewcardGroupOverlay(true)} className='mt-4'>
           add new set
         </button>
       </div>
 
       <div className='side-bar flex flex-col gap-4 w-[23%] h-full border-r-2 p-2 absolute left-0'>
-        <h1 className='text-3xl text-center relative top-2'>Card Sets</h1>
-        <div className='overflow-scroll'>
+        <h1 className='text-3xl text-center relative top-2 select-none'>
+          Card Sets
+        </h1>
+        <div className='overflow-scroll hide-scroll-bars'>
           <ul className='flex flex-col gap-2 '>
             {/* maps the state array to list items from database */}
             {getCardGroups.map((cards, index) => (
               <li
                 key={index}
-                className='cursor-pointer border-b-2 h-[50px] flex justify-center items-center'
+                className='cursor-pointer border-b-2 h-[50px] flex justify-center items-center select-none'
                 onClick={handleListItemClick}
               >
                 {cards.name}
