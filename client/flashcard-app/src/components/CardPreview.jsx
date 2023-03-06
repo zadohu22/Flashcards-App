@@ -42,6 +42,10 @@ const CardPreview = ({
   const [boolTitle, setBoolTitle] = useState(cardInfo.title);
   const [boolSelection, setBoolSelection] = useState(cardInfo.selection);
 
+  const handleEdit = () => {
+    setEdit(!edit);
+  };
+
   return (
     <>
       <input
@@ -55,7 +59,7 @@ const CardPreview = ({
         className='modal cursor-pointer'
         onClick={handleCloseModal}
       >
-        <label className='modal-box relative' htmlFor='null'>
+        <label className='modal-box relative'>
           {cardInfo.cardType === "Definition" ? (
             edit === true ? (
               <EditDefinitionCard
@@ -78,7 +82,8 @@ const CardPreview = ({
                 <p className='mb-20 max-w-full break-words overflow-scroll hide-scroll-bars'>
                   {changeDefinition}
                 </p>
-                <button onClick={() => setEdit(!edit)}>Edit Card</button>
+                <button onClick={handleEdit}>Edit Card</button>
+                <p>testttt</p>
               </div>
             )
           ) : cardInfo.cardType === "Choice" ? (
@@ -157,7 +162,7 @@ const CardPreview = ({
                   {boolSelection === 0 && <p>✔️</p>}
                 </div>
               </div>
-              <button onClick={() => setEdit(!edit)}>Edit Card</button>
+              <button onClick={() => setEdit(true)}>Edit Card</button>
             </div>
           )}
         </label>

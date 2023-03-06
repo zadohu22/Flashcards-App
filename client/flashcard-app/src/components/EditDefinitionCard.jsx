@@ -2,6 +2,7 @@ import React from "react";
 import { UpdateCard } from "../Requests/UpdateCard";
 import { getAllCards } from "../Requests/GetAllCards";
 import { useState } from "react";
+import { useEffect } from "react";
 
 const EditDefinitionCard = ({
   cardInfo,
@@ -32,13 +33,13 @@ const EditDefinitionCard = ({
       newDefinition
     );
     await getAllCards(setId, setAllCards);
-    setClicked(!clicked);
+    // setClicked(!clicked);
     setDefinitionTitle(newTitle);
     setChangeDefinition(newDefinition);
   };
 
   return (
-    <div className='relative h-[500px]  border-gray-50 border-2 rounded-lg flex flex-col items-center justify-around'>
+    <div className='relative h-[500px]  border-gray-50 border-2 rounded-lg flex flex-col items-center justify-around z-10'>
       <p
         className='absolute top-0 right-4 cursor-pointer text-xl'
         onClick={async () => {
@@ -61,7 +62,7 @@ const EditDefinitionCard = ({
         onChange={(e) => setNewDefinition(e.target.value)}
         value={newDefinition}
       ></textarea>
-      <button className='mt-2' onClick={handleSendUpdate}>
+      <button className='mt-2' onClick={() => handleSendUpdate}>
         Save Changes
       </button>
     </div>

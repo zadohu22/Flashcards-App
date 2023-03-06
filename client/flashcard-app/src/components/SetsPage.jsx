@@ -60,7 +60,7 @@ const SetsPage = () => {
   const displayAllCardsBasic = (cards) => {
     return allCards.map((card, index) => {
       return (
-        <div className='card-preview mb-4'>
+        <div key={index} className='card-preview mb-4'>
           <p className='select-none'>{card.cardType} Card</p>
           <h2 className='break-words text-xl'>{card.title}</h2>
           <div className='flex w-full justify-center items-center gap-4 mb-2'>
@@ -83,6 +83,7 @@ const SetsPage = () => {
 
   const handleSelectMenu = (e) => {
     setSelectedCardType(e.target.innerText);
+    console.log(selectedCardType);
   };
 
   const handleResetDefaultSelected = (e) => {
@@ -128,13 +129,14 @@ const SetsPage = () => {
             <select
               value={selectedCardType}
               className='select select-secondary w-full max-w-xs'
+              onChange={(e) => setSelectedCardType(e.target.value)}
             >
-              <option disabled selected value='defaultSelected'>
+              <option disabled value='defaultSelected'>
                 Which type of flashcard?
               </option>
-              <option onClick={handleSelectMenu}>Definition</option>
-              <option onClick={handleSelectMenu}>Multiple Choice</option>
-              <option onClick={handleSelectMenu}>True/False</option>
+              <option>Definition</option>
+              <option>Multiple Choice</option>
+              <option>True/False</option>
             </select>
             {selectedCardType === "Definition" ? (
               <AddDefinitionCard
