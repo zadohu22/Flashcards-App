@@ -30,6 +30,7 @@ const SetsPage = () => {
 
   useEffect(() => {
     getAllCards(setId, setAllCards, allCards);
+    setSelectedCardType("defaultSelected");
   }, []);
 
   useEffect(() => {
